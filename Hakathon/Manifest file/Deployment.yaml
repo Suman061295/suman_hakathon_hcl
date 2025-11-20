@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service_1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: service_1
+  template:
+    metadata:
+      labels:
+        app: service_1
+    spec:
+      imagePullSecrets:
+      - name: ecr-registry-secret
+      containers:
+      - name: api
+        image: "<aws_account_id>.dkr.ecr.<region>.amazonaws.com/todo-service:latest"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3500
